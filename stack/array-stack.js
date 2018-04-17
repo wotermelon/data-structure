@@ -1,4 +1,4 @@
-class Stack {
+class ArrayStack {
   constructor () {
     // 用数组模拟栈
     this.stackList = []
@@ -21,7 +21,7 @@ class Stack {
    * 查看栈顶元素
    * @return {Any} 栈顶元素
    */
-  top () {
+  getTop () {
     return this.stackList[this.stackList.length - 1]
   }
   /**
@@ -45,5 +45,3 @@ class Stack {
     return this.stackList.length
   }
 }
-
-module.exports = Stack
