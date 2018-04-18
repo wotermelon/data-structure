@@ -1,13 +1,16 @@
+const Base = require('./base')
+
 /**
  * 单向链表
  */
 class Node {
-  constructor (el) {
+  constructor(el) {
+    super()
     this.el = el
     this.next = null
   }
 }
-class SingleLinkList {
+class SingleLinkList extends Base {
   constructor () {
     this.head = null
     this.length = 0
@@ -50,7 +53,7 @@ class SingleLinkList {
    */
   append (newEl) {
     const node = new Node(newEl)
-    if (!this.head) {
+    if (this.isEmpty()) {
       this.head = node
     } else {
       let current = this.head
@@ -69,18 +72,13 @@ class SingleLinkList {
    * @return {Node} node
    */
   insert (newEl, cb) {
-    if (!cb) {
-      this.append(newEl)
-      return
+    if (this.isEmpty() || typeof cb !== 'function') {
+      return this.append(newEl)
     }
     const node = new Node(newEl)
-    if (!this.head) {
-      this.head = node
-    } else {
-      let p1 = this.find(cb)
-      node.next = p1.next
-      p1.next = node
-    }
+    let p1 = this.find(cb)
+    node.next = p1.next
+    p1.next = node
     this.length++
     return node
   }
@@ -106,7 +104,9 @@ class SingleLinkList {
    * @param {Function} cb 查找函数。可选，没有为移除链表最后一个元素
    */
   remove (cb) {
-    if (!cb) {
+    // 空链表不做任何操作
+    if (this.isEmpty()) return
+    if (typeof cb !== 'function') {
       return this.removeLast()
     }
     if (cb(this.head.el)) {
